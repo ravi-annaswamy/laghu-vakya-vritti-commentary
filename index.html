@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laghu Vakya Vritti - Shlokas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .sanskrit {
+            font-family: 'Mukta', sans-serif;
+            font-size: 1.4em;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #1a237e;
+        }
+        .transliteration {
+            text-align: center;
+            color: #283593;
+            margin-bottom: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #e8eaf6;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .tab {
+            padding: 5px 15px;
+            border-radius: 3px;
+        }
+        .tab.active {
+            background-color: #3949ab;
+            color: white;
+        }
+        .content {
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="shloka-container">
+    <h2 class="sanskrit" id="sanskrit-text"></h2>
+    <div class="transliteration" id="transliteration-text"></div>
+
+    <div class="tabs">
+        <div class="tab active" data-content="phrase">Phrase Meanings</div>
+        <div class="tab" data-content="english">English Commentary</div>
+        <div class="tab" data-content="tamil">Tamil Commentary</div>
+        <div class="tab" data-content="tags">Themes (Tags)</div>
+        <div class="tab" data-content="concordance">Upadesa Saram Concordance</div>
+    </div>
+
+    <div class="content" id="content">
+        Loading...
+    </div>
+
+    <div class="navigation">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+    </div>
+</div>
+
+<script>
+    const shlokas = [
+        {
+            sanskrit: "(1) स्थूलो मांसमयो देहः सूक्ष्मः स्यादासनामयः। <br>ज्ञानकर्मेन्द्रियैः सार्धं धीप्राणौ तच्चरेरितौ॥",
+            transliteration: "sthūlo māṃsamayo dehaḥ sūkṣmaḥ syādāsanāmayaḥ,<br>jñānakarmendriyaiḥ sārdhaṃ dhīprāṇau taccareritou.",
+            phrase: `<ul>
+                        <li><strong>स्थूलः (sthūlaḥ):</strong> Gross</li>
+                        <li><strong>मांसमयः देहः (māṃsamayaḥ dehaḥ):</strong> body made of flesh</li>
+                        <li><strong>सूक्ष्मः (sūkṣmaḥ):</strong> subtle</li>
+                        <li><strong>आसनामयः (āsanāmayaḥ):</strong> made of desires</li>
+                        <li><strong>ज्ञानकर्मेन्द्रियैः (jñānakarmendriyaiḥ):</strong> with organs of perception/action</li>
+                        <li><strong>धीप्राणौ (dhīprāṇau):</strong> intellect and vital force</li>
+                        <li><strong>तच्चरेरितौ (taccareritou):</strong> constitutes body</li>
+                    </ul>`,
+            english: "The gross body, made of flesh, conditions the Atman; the subtle body consisting of desires, along with organs of perception, action, intellect, and vital force, constitutes another conditioning.",
+            tamil: "மாம்ச மயமானது ஸ்தூல சரீரம். ஸூக்ஷ்ம சரீரம் வாஸனாமயம். ஞானேந்திரியங்கள், கர்மேந்திரியங்கள், இதனுடன் புத்தியும், பிராணனும் சேர்ந்ததே ஸூக்ஷ்ம சரீரம்.",
+            tags: "Gross body, subtle body, conditioning, desires, perception organs, vital force.",
+            concordance: "Verses 1, 22 from Upadesa Saram (Action yields fruit by divine will; body-mind complex being insentient and unreal)."
+        },
+{
+    sanskrit: "(2) अज्ञानं कारणं साक्षी बोधस्तस्य विभासकः। <br>बोधाभासो बुद्धिगतः कर्ता स्यात्पुण्यपापयोः॥",
+    transliteration: "ajñānaṃ kāraṇaṃ sākṣī bodhastasya vibhāsakaḥ,<br>bodhābhāso buddhigataḥ kartā syāt puṇyapāpayoḥ.",
+    phrase:  `<ul>
+                    <li><strong>अज्ञानं (ajñānaṃ):</strong> ignorance</li>
+                    <li><strong>कारणं (kāraṇaṃ):</strong> causal</li>
+                    <li><strong>साक्षी (sākṣī):</strong> witness</li>
+                    <li><strong>बोधः (bodhaḥ):</strong> pure consciousness</li>
+                    <li><strong>तस्य विभासकः (tasya vibhāsakaḥ):</strong> its illuminator</li>
+                    <li><strong>बोधाभासः (bodhābhāsaḥ):</strong> reflection of consciousness</li>
+                    <li><strong>बुद्धिगतः (buddhigataḥ):</strong> within intellect</li>
+                    <li><strong>कर्ता (kartā):</strong> performer</li>
+                    <li><strong>पुण्यपापयोः (puṇyapāpayoḥ):</strong> of good and evil actions</li>
+              </ul>`,
+    english: "Ignorance is causal conditioning. Pure consciousness is the witness and illuminator. The reflection of consciousness in the intellect acts as the performer of good and evil actions.",
+    tamil: "முன்னிருக்கும் அறியாமைதான் காரியங்களைச் செய்ய காரணமாகும். அறிவு அவற்றை வெளிப்படுத்தும் ஸாக்ஷி. புத்தியில் உள்ள அறிவுப்போலி கர்த்தா ஆகி புண்ய-பாபங்களைச் செய்கிறது.",
+    tags: "Ignorance, causal conditioning, pure consciousness, witness, reflection of consciousness, intellect, doership.",
+    concordance: "Verses 1, 22, 23 from Upadesa Saram (Action as insentient; insentience and unreality of body-mind; pure consciousness as witness and illuminator)."
+},
+
+{
+    "sanskrit": "(3) स एव संसरेत् कर्मवशाल्लोकद्वये सदा। <br>बोधाभासाच्च शुद्धबोधं विविच्यादतियत्नतः॥",
+    "transliteration": "sa eva saṃsaret karmavaśāllokadvaye sadā,<br>bodhābhāsācca śuddhabodhaṃ vivicyādatiyatnataḥ.",
+    "phrase": "<ul> <li><strong>स एव (sa eva):</strong> that very (jiva)</li> <li><strong>संसरेत् (saṃsaret):</strong> migrates</li> <li><strong>कर्मवशात् (karmavaśāt):</strong> due to actions</li> <li><strong>लोकद्वये (lokadvaye):</strong> in the two worlds</li> <li><strong>सदा (sadā):</strong> continuously</li> <li><strong>बोधाभासात् (bodhābhāsāt):</strong> from reflected consciousness</li> <li><strong>शुद्धबोधं (śuddhabodhaṃ):</strong> pure consciousness</li> <li><strong>विविच्यात् (vivicyāt):</strong> should discriminate</li> <li><strong>अतियत्नतः (atiyatnataḥ):</strong> with great effort</li> </ul>",
+    "english": "Due to karma, the jiva continuously migrates between two worlds. With supreme effort, one must discriminate pure consciousness from its reflection.",
+    "tamil": "அந்த அறிவுப்போலிதான் இரண்டு லோகத்திலும் கர்மாக்களை அனுசரித்து இயங்குகிறது. அந்த அறிவுப்போலியை சுத்த அறிவிலிருந்து மிகப் பிரயாசையுடன் பிரித்துவிட வேண்டும்.",
+    "tags": "Jiva, migration, karma, discrimination, reflected consciousness, pure consciousness.",
+    "concordance": "Verses 2, 3, 13 from Upadesa Saram (Action causing further bondage, discriminative wisdom and liberation)."
+},
+
+{
+    "sanskrit": "(4) जागरस्वप्नयोरेव बोधाभासविदम्बना। <br>सुप्तौ तु तल्लये शुद्धबोधो जाड्यं प्रकाशयेत्॥",
+    "transliteration": "jāgarasvapnayoreva bodhābhāsavidambanā,<br>suptau tu tallaye śuddhabodho jāḍyaṃ prakāśayet.",
+    "phrase": "<ul> <li><strong>जागरस्वप्नयोः (jāgarasvapnayoḥ):</strong> waking and dreaming states</li> <li><strong>बोधाभासविदम्बना (bodhābhāsavidambanā):</strong> reflection of consciousness operates</li> <li><strong>सुप्तौ (suptau):</strong> in deep sleep</li> <li><strong>तल्लये (tallaye):</strong> when it (reflection) merges</li> <li><strong>शुद्धबोधः (śuddhabodhaḥ):</strong> pure consciousness</li> <li><strong>जाड्यं (jāḍyaṃ):</strong> ignorance, inertness</li> <li><strong>प्रकाशयेत् (prakāśayet):</strong> illumines</li> </ul>",
+    "english": "Reflected consciousness acts only during waking and dream states. In deep sleep, when it merges, pure consciousness alone illumines ignorance.",
+    "tamil": "ஜாக்ரத் (விழிப்பு), ஸ்வப்னங்களில்தான் போலி அறிவின் மிடுக்கான இயக்கம் இருக்கும்; துயில்வேளையில் அது லயமாகும்போது (மங்கியபோது) சுத்த அறிவு அறியாமையைத் தெளிவாக்கும்.",
+    "tags": "Waking state, dream state, deep sleep, reflected consciousness, pure consciousness, illumination, ignorance.",
+    "concordance": "Verses 18, 19, 22 from Upadesa Saram (mind-states, ego identification, pure consciousness illumination)."
+},
+{
+    "sanskrit": "(5) जागरेऽपि धियस्तूष्णीम्भावः शुद्धेन भास्यते। <br>धीव्यापाराश्च तद्भास्याश्चिदाभासेन संयुताः॥",
+    "transliteration": "jāgare'pi dhiyastūṣṇīmbhāvaḥ śuddhena bhāsyate,<br>dhīvyāpārāśca tadbhāsyāścidābhāsena saṃyutāḥ.",
+    "phrase": "<ul> <li><strong>जागरे (jāgare):</strong> in waking state</li> <li><strong>धियः (dhiyaḥ):</strong> intellect’s</li> <li><strong>तूष्णीम्भावः (tūṣṇīmbhāvaḥ):</strong> state of stillness</li> <li><strong>शुद्धेन (śuddhena):</strong> by pure consciousness</li> <li><strong>भास्यते (bhāsyate):</strong> illumined</li> <li><strong>धीव्यापाराः (dhīvyāpārāḥ):</strong> activities of intellect</li> <li><strong>तद्भास्याः (tadbhāsyāḥ):</strong> illumined by that (pure consciousness)</li> <li><strong>चिदाभासेन (cidābhāsena):</strong> with reflection of consciousness</li> <li><strong>संयुताः (saṃyutāḥ):</strong> associated</li> </ul>",
+    "english": "Even in waking, the stillness and activities of intellect are illumined by pure consciousness along with its reflection.",
+    "tamil": "ஜாகரத்திலும்  சுத்த அறிவு மேலிட்டபோது அறிவுப்போலி தெளிவாக்கப்படும். புத்தியின் இயக்கம் சிதாபாஸத்துடன் கூடிய சித் மூலமாக விளங்கும்.",
+    "tags": "Waking state, intellect’s stillness, intellect’s activities, pure consciousness, reflected consciousness, illumination.",
+    "concordance": "Verses 9, 16, 23 from Upadesa Saram (illumination, self-awareness, consciousness transcending thought)."
+},
+{
+    "sanskrit": "(6) वह्नितप्तं जलं तापयुक् देहस्य तापकम्। <br>चिद्भासया धीस्तद्द्वारा विषयान् भासयेत्तथा॥",
+    "transliteration": "vahnitaptaṃ jalaṃ tāpayuk dehasya tāpakam,<br>cidbhāsayā dhīstaddvārā viṣayān bhāsayettathā.",
+    "phrase": "<ul> <li><strong>वह्नितप्तं (vahnitaptaṃ):</strong> heated by fire</li> <li><strong>जलं (jalaṃ):</strong> water</li> <li><strong>तापयुक् (tāpayuk):</strong> becomes hot</li> <li><strong>देहस्य (dehasya):</strong> body's</li> <li><strong>तापकम् (tāpakam):</strong> causes heat</li> <li><strong>चिद्भासया (cidbhāsayā):</strong> by consciousness-reflection</li> <li><strong>धीः (dhīḥ):</strong> intellect</li> <li><strong>तद्द्वारा (taddvārā):</strong> through it</li> <li><strong>विषयान् (viṣayān):</strong> objects</li> <li><strong>भासयेत् (bhāsayet):</strong> illumines, reveals</li> </ul>",
+    "english": "Just as water heated by fire becomes hot and causes heat to the body, similarly the intellect, illumined by consciousness-reflection, reveals objects through itself.",
+    "tamil": "தீயில் சூடாக்கிய தண்ணீர் சூட்டோடு உடலைச் சுடும். அதுபோல சித்தினால் தெளிவாகும் புத்தி, புத்திப்போலியுடன் சேர்ந்து மற்றதை விளங்கச் செய்யும்.",
+    "tags": "Analogy, intellect, reflection of consciousness, illumination, perception.",
+    "concordance": "Verses 16, 23 from Upadesa Saram (inner illumination, consciousness as witness and illuminator)."
+},
+{
+    "sanskrit": "(7) रूपादौ गुणदोषौ च दिविकल्पा बुद्धिगाः क्रियाः। <br>ताः क्रिया विषयैः सार्धं भासयन्ति चितिर्मता॥",
+    "transliteration": "rūpādau guṇadoṣau ca divikalpā buddhigāḥ kriyāḥ,<br>tāḥ kriyā viṣayaiḥ sārdhaṃ bhāsayanti citirmatā.",
+    "phrase": "<ul> <li><strong>रूपादौ (rūpādau):</strong> in form, etc.</li> <li><strong>गुणदोषौ (guṇadoṣau):</strong> good and bad qualities</li> <li><strong>दिविकल्पाः (divikalpāḥ):</strong> mental imaginations, modifications</li> <li><strong>बुद्धिगाः (buddhigāḥ):</strong> arising in intellect</li> <li><strong>क्रियाः (kriyāḥ):</strong> activities</li> <li><strong>ताः क्रिया (tāḥ kriyā):</strong> those activities</li> <li><strong>विषयैः (viṣayaiḥ):</strong> with objects</li> <li><strong>सार्धं (sārdhaṃ):</strong> together with</li> <li><strong>भासयन्ति (bhāsayanti):</strong> illumines, reveals</li> <li><strong>चितिः (citiḥ):</strong> consciousness</li> </ul>",
+    "english": "Good and bad qualities regarding forms and objects arise as mental imaginations in intellect. Consciousness illumines these intellectual activities along with their objects.",
+    "tamil": "ரூபாதிகளில் பார்த்து கேட்டு உணரப்படும் பொருட்களில் குண தோஷம் (நல்லது கேட்டது) என்று எதிர்வினையுடன் அறிய புத்தியின் செயல்பாடே காரணமாகிறது. பொருட்களையும், இவ்வித செயல்பாட்டையும் உணர்வது சித் தன்மையினால்தான்.",
+    "tags": "Mental constructs, intellect, imagination, qualities, illumination, perception.",
+    "concordance": "Verses 1, 18, 23 from Upadesa Saram (mind-ego identification, mental constructs, consciousness illumination)."
+},
+{
+    "sanskrit": "(8) रूपाच्च गुणदोषाभ्यां विविक्ता केवलाचितिः। <br>सैवानुवर्तते रूपरसादीनां विकल्पने॥",
+    "transliteration": "rūpācca guṇadoṣābhyāṃ viviktā kevalācitiḥ,<br>saivānuvartate rūparasādīnāṃ vikalpane.",
+    "phrase": "<ul> <li><strong>रूपाच्च (rūpācca):</strong> from form, etc.</li> <li><strong>गुणदोषाभ्यां (guṇadoṣābhyāṃ):</strong> from good and bad qualities</li> <li><strong>विविक्ता (viviktā):</strong> distinct, separated</li> <li><strong>केवला चितिः (kevalā citiḥ):</strong> pure consciousness alone</li> <li><strong>सा एव (sā eva):</strong> that alone</li> <li><strong>अनुवर्तते (anuvartate):</strong> persists, follows</li> <li><strong>रूपरसादीनां (rūparasādīnāṃ):</strong> of form, taste, etc.</li> <li><strong>विकल्पने (vikalpane):</strong> in mental imaginations</li> </ul>",
+    "english": "Pure consciousness remains distinct from forms and their good/bad qualities. Yet, it persists as the underlying common factor in mental imaginations regarding forms, taste, etc.",
+    "tamil": "ரூபத்தில் இருந்தும், அதன் குண தோஷங்களிலிருந்தும் வேறுபட்ட சித்தே என்றும் உள்ளது, ஆனால் ரூபம், ரஸம் இவற்றின் விகல்பங்களில் அந்த சித் தொடர்ந்து செயல்படும்.",
+    "tags": "Pure consciousness, forms, qualities, mental imaginations, underlying awareness.",
+    "concordance": "Verses 23, 25, 26 from Upadesa Saram (absolute consciousness, non-dual Self, underlying unity)."
+},
+{
+    "sanskrit": "(9) क्षणे क्षणेऽन्यथाभाता धीविकल्पाश्चितिस्तु न। <br>मुक्तासु सूत्रवद्बुद्धिविकल्पेषु चितिः स्थिता॥",
+    "transliteration": "kṣaṇe kṣaṇe'nyathābhātā dhīvikalpāścitistu na,<br>muktāsu sūtravadbuddhivikalpeṣu citiḥ sthitā.",
+    "phrase": "<ul> <li><strong>क्षणे क्षणे (kṣaṇe kṣaṇe):</strong> moment to moment</li> <li><strong>अन्यथाभाता (anyathābhātā):</strong> appear differently, change</li> <li><strong>धीविकल्पाः (dhīvikalpāḥ):</strong> mental modifications</li> <li><strong>चितिः तु न (citistu na):</strong> consciousness, however, does not</li> <li><strong>मुक्तासु (muktāsu):</strong> in pearls</li> <li><strong>सूत्रवत् (sūtravat):</strong> like a thread</li> <li><strong>बुद्धिविकल्पेषु (buddhivikalpeṣu):</strong> in intellectual modifications</li> <li><strong>चितिः (citiḥ):</strong> consciousness</li> <li><strong>स्थिता (sthitā):</strong> remains steady, present</li> </ul>",
+    "english": "Mental modifications continually change every moment, but consciousness remains unchanged, steadily present like a thread through pearls.",
+    "tamil": "நொடிக்கு நொடி இது அது என்று புலன் காட்டும் விஷயங்களும் புத்தியின் எதிர்வினைகளும் மாறிக்கொண்டே இருக்கின்றன. ஆனால் இருப்புணர்வான சித் மாறாது உள்ளது. முத்து மாலையில், பல வண்ண முத்துக்கள் கோர்க்கப்பட்டாலும், இடையே ஒரே ஒரு நூல் ஊடுருவதுபோல் வெவ்வேறான விஷயங்களை அறியும் பொது, இருப்புணர்வு ஒன்றேயாய் உள்ளது.",
+    "tags": "Intellect modifications, continuity of consciousness, analogy of thread and pearls, steadiness of awareness.",
+    "concordance": "Verses 7, 16, 23 from Upadesa Saram (continuous awareness, uninterrupted consciousness)."
+},
+{
+    "sanskrit": "(10) मुक्ताभिरावृतं सूत्रं मुक्तयोर्मध्ये ईक्ष्यते। <br>तथैव वृत्तिविकल्पैः स्पष्टा मध्ये विकल्पयोः॥",
+    "transliteration": "muktābhirāvṛtaṃ sūtraṃ muktayormadhye īkṣyate,<br>tathaiva vṛttivikalpaiḥ spaṣṭā madhye vikalpayoḥ.",
+    "phrase": "<ul><li><strong>मुक्ताभिः (muktābhiḥ):</strong> by pearls</li><li><strong>आवृतं (āvṛtaṃ):</strong> covered</li><li><strong>सूत्रं (sūtraṃ):</strong> thread</li><li><strong>मुक्तयोः मध्ये (muktayoḥ madhye):</strong> between pearls</li><li><strong>ईक्ष्यते (īkṣyate):</strong> is seen</li><li><strong>तथैव (tathaiva):</strong> likewise</li><li><strong>वृत्तिविकल्पैः (vṛttivikalpaiḥ):</strong> by thought modifications</li><li><strong>स्पष्टा (spaṣṭā):</strong> clearly</li><li><strong>मध्ये विकल्पयोः (madhye vikalpayoḥ):</strong> between thoughts</li></ul>",
+    "english": "Just as a thread covered by pearls is clearly visible between them, similarly consciousness clearly manifests between thought modifications.",
+    "tamil": "முத்துக்கள் அடர்த்தியாக அமைந்தபோதும் இரு முத்துக்களின் நடுவில் நூல் வெளிப்படும். அதுபோலவே இரண்டு விகல்பங்களின் நடுவில் சித் வெளிப்படும்.",
+    "tags": "Thread and pearls analogy, consciousness, clarity between thoughts, thought modifications.",
+    "concordance": "Verses 7, 14, 16 from Upadesa Saram (continuous meditation, gaps between thoughts, consciousness clarity)."
+},
+{
+    "sanskrit": "(11) नष्टे पूर्वविकल्पे तु यावदन्यस्य नोदयः। <br>निर्विकल्पकचैतन्यं स्पष्टं तावद्विभासते॥",
+    "transliteration": "naṣṭe pūrvavikalpe tu yāvadanyasya nodayaḥ,<br>nirvikalpakacaitanyaṃ spaṣṭaṃ tāvadvibhāsate.",
+    "phrase": "<ul><li><strong>नष्टे (naṣṭe):</strong> when ended</li><li><strong>पूर्वविकल्पे (pūrvavikalpe):</strong> previous thought</li><li><strong>तु यावत् (tu yāvat):</strong> until</li><li><strong>अन्यस्य (anyasya):</strong> another (thought)</li><li><strong>न उदयः (no udayaḥ):</strong> does not arise</li><li><strong>निर्विकल्पकचैतन्यं (nirvikalpakacaitanyaṃ):</strong> undifferentiated consciousness</li><li><strong>स्पष्टं (spaṣṭaṃ):</strong> clearly</li><li><strong>तावत् (tāvat):</strong> during that interval</li><li><strong>विभासते (vibhāsate):</strong> shines forth</li></ul>",
+    "english": "When the previous thought ends and the next has not yet arisen, undifferentiated pure consciousness clearly shines forth during that interval.",
+    "tamil": "முன்னதான மாற்று எண்ணம் தொலைந்து, வேறு மாற்று எண்ணம் தோன்றும்வரை இடையில் எதையும் சாராத சைதன்யம் தெளிவாக வெளிப்படுகிறது.",
+    "tags": "Thought intervals, undifferentiated consciousness, clarity of awareness, mental stillness.",
+    "concordance": "Verses 7, 13, 16 from Upadesa Saram (interval-based meditation, pure consciousness clarity)."
+},
+{
+    "sanskrit": "(12) एकद्वित्रिक्षणैरेवं विकल्पस्य निरोधनम्। <br>क्रमेणाभ्यस्यतां यत्नाद्ब्रह्मानुभवकाङ्क्षिभिः॥",
+    "transliteration": "ekadvitrikṣaṇairevaṃ vikalpasya nirodhanam,<br>krameṇābhyasyatāṃ yatnādbrahmānubhavakāṅkṣibhiḥ.",
+    "phrase": "<ul><li><strong>एकद्वित्रिक्षणैः (ekadvitrikṣaṇaiḥ):</strong> gradually, by one, two, three moments</li><li><strong>एवं (evaṃ):</strong> thus</li><li><strong>विकल्पस्य (vikalpasya):</strong> of thoughts</li><li><strong>निरोधनम् (nirodhanam):</strong> restraint</li><li><strong>क्रमेण (krameṇa):</strong> gradually, sequentially</li><li><strong>अभ्यस्यतां (abhyasyatāṃ):</strong> should be practiced</li><li><strong>यत्नात् (yatnāt):</strong> diligently, with effort</li><li><strong>ब्रह्मानुभवकाङ्क्षिभिः (brahmānubhavakāṅkṣibhiḥ):</strong> by those aspiring for Brahman-realization</li></ul>",
+    "english": "Those aspiring for Brahman-realization must diligently practice gradual restraint of thoughts, increasing the duration progressively from one moment to multiple moments.",
+    "tamil": "ப்ரஹ்மானுபவம் வேண்டி விழையும் சாதகர் - ஒன்று, இரண்டு, மூன்று கணங்களுக்கு மட்டுமாவது விகல்பங்கள் எழாதிருக்க தடுத்து படிப்படியாக முயன்று ஸாதிக்கவேண்டும்.",
+    "tags": "Gradual practice, thought restraint, Brahman realization, diligent effort.",
+    "concordance": "Verses 7, 14 from Upadesa Saram (controlled meditation, gradual practice, thought restraint)."
+},
+{
+    "sanskrit": "(13) सविकल्पकजीवोऽयं ब्रह्म स्यान्निर्विकल्पकम्। <br>अहं ब्रह्मेति वाक्येन सोऽयमर्थोऽभिधीयते॥",
+    "transliteration": "savikalpakajīvo'yaṃ brahma syānnirvikalpakam,<br>ahaṃ brahmeti vākyena so'yamartho'bhidhīyate.",
+    "phrase": "<ul><li><strong>सविकल्पकजीवः (savikalpakajīvaḥ):</strong> the jiva associated with thoughts</li><li><strong>अयं (ayaṃ):</strong> this very</li><li><strong>ब्रह्म (brahma):</strong> Brahman</li><li><strong>स्यात् (syāt):</strong> is</li><li><strong>निर्विकल्पकम् (nirvikalpakam):</strong> without thoughts</li><li><strong>अहं ब्रह्मेति (ahaṃ brahmeti):</strong> \"I am Brahman\"</li><li><strong>वाक्येन (vākyena):</strong> by this sentence (Mahavakya)</li><li><strong>सः अयम् अर्थः (sa ayam arthaḥ):</strong> this very meaning</li><li><strong>अभिधीयते (abhidhīyate):</strong> is expressed, conveyed</li></ul>",
+    "english": "The individual self associated with thoughts is itself the thought-free Brahman. This meaning is clearly conveyed by the statement, \"I am Brahman.\"",
+    "tamil": "‘அஹம் ப்ரஹ்மம்’ - நானே பிரம்மம் - என்ற வாக்கியம் - மாறுபட்ட நிலையிலே இருக்கும் இந்த ஜீவன்தான் மாறுபடாத பிரம்மம் என்ற கருத்தைக் கூறுகிறது.",
+    "tags": "Jiva-Brahman identity, non-dual realization, Mahavakya, thought-free Brahman.",
+    "concordance": "Verses 8, 20, 24, 25, 26 from Upadesa Saram (non-dual realization, identity with Brahman)."
+},
+{
+    "sanskrit": "(14) सविकल्पकचिद्योऽहं ब्रह्मैकं निर्विकल्पकम्। <br>स्वतःसिद्धा विकल्पास्ते निरोध्याः प्रयत्नतः॥",
+    "transliteration": "savikalpakacidyo'haṃ brahmaikaṃ nirvikalpakam,<br>svataḥsiddhā vikalpāste nirodhyāḥ prayatnataḥ.",
+    "phrase": "<ul><li><strong>सविकल्पकचित् (savikalpakacit):</strong> consciousness associated with thoughts</li><li><strong>यः अहं (yo'haṃ):</strong> which is \"I\"</li><li><strong>ब्रह्म एकं (brahmaikaṃ):</strong> Brahman alone</li><li><strong>निर्विकल्पकम् (nirvikalpakam):</strong> thought-free</li><li><strong>स्वतःसिद्धाः (svataḥsiddhāḥ):</strong> self-evident</li><li><strong>विकल्पाः (vikalpāḥ):</strong> thoughts</li><li><strong>ते (te):</strong> those</li><li><strong>निरोध्याः (nirodhyāḥ):</strong> must be restrained</li><li><strong>प्रयत्नतः (prayatnataḥ):</strong> with effort</li></ul>",
+    "english": "The consciousness associated with thoughts, identified as \"I,\" is indeed the thought-free Brahman alone. Self-evident thoughts must be diligently restrained.",
+    "tamil": "விகல்பங்களை கவனிக்கையில் ஜீவன் போல் தோன்றும் அறிவு, விகல்பங்கள் இல்லாத போதும் உள்ள போதும் சுத்த பிரம்மமே. இதை உணர, தாமாக எழும் விகல்பங்களை தடுத்து முதலில் சுத்த உணர்வாக உணரவேண்டும்.",
+    "tags": "Identity with Brahman, consciousness, thoughts restraint, diligent effort.",
+    "concordance": "Verses 8, 14, 19, 26 from Upadesa Saram (inner identification, ego dissolution, meditation)."
+},
+{
+    "sanskrit": "(15) शक्यः सर्वनिरोधश्चेत्समाधिर्ज्ञानिनां प्रियः। <br>तदशक्तौ क्षणं रुद्ध्वा श्रद्धेय ब्रह्मतात्मनः॥",
+    "transliteration": "śakyaḥ sarvanirodhaścetsamādhirjñānināṃ priyaḥ,<br>tadaśaktau kṣaṇaṃ ruddhvā śraddheya brahmatātmanaḥ.",
+    "phrase": "<ul><li><strong>शक्यः (śakyaḥ):</strong> possible</li><li><strong>सर्वनिरोधः (sarvanirodhaḥ):</strong> complete cessation</li><li><strong>समाधिः (samādhiḥ):</strong> deep absorption</li><li><strong>ज्ञानिनां प्रियः (jñānināṃ priyaḥ):</strong> cherished by the wise</li><li><strong>तदशक्तौ (tadaśaktau):</strong> if unable</li><li><strong>क्षणं (kṣaṇaṃ):</strong> momentarily</li><li><strong>रुद्ध्वा (ruddhvā):</strong> restraining</li><li><strong>श्रद्धेय (śraddheya):</strong> contemplate with faith</li><li><strong>ब्रह्मता आत्मनः (brahmatātmanaḥ):</strong> Brahman identity of the Self</li></ul>",
+    "english": "Complete cessation of thought (samadhi) is cherished by the wise. If not possible, momentarily restrain thoughts and faithfully contemplate identity with Brahman.",
+    "tamil": "எல்லா விகல்பங்களையும் ஒழித்து எந்த முனைப்பான உணர்வு ஏற்படுகிறதோ, அதுவே யோகிகளுக்கு உகந்த சமாதி. அது முடியாவிட்டால், ஒரு கணமாவது தடை செய்து ஆத்மாவைப் பற்றி நினைக்க வேண்டும்.",
+    "tags": "Samadhi, thought cessation, momentary restraint, Brahman contemplation.",
+    "concordance": "Verses 13, 14, 15 from Upadesa Saram (samadhi, mental dissolution, momentary restraint)."
+},
+{
+    "sanskrit": "(16) श्रद्धालुर्ब्रह्मतां स्वस्य चिन्तयेद्बुद्धिवृत्तिभिः। <br>वाक्यार्थत्वात् यथाशक्ति ज्ञात्वा ह्यभ्यस्यतां सदा॥",
+    "transliteration": "śraddhālurbrahmatāṃ svasya cintayedbuddhivṛttibhiḥ,<br>vākyārthatvāt yathāśakti jñātvā hyabhyasyatāṃ sadā.",
+    "phrase": "<ul><li><strong>श्रद्धालुः (śraddhāluḥ):</strong> one with faith</li><li><strong>ब्रह्मतां (brahmatāṃ):</strong> Brahman identity</li><li><strong>स्वस्य (svasya):</strong> one's own</li><li><strong>चिन्तयेत् (cintayet):</strong> should contemplate</li><li><strong>बुद्धिवृत्तिभिः (buddhivṛttibhiḥ):</strong> through intellectual processes</li><li><strong>वाक्यार्थत्वात् (vākyārthatvāt):</strong> understanding the scriptural meaning</li><li><strong>यथाशक्ति (yathāśakti):</strong> according to one's capacity</li><li><strong>ज्ञात्वा (jñātvā):</strong> having known</li><li><strong>हि (hi):</strong> indeed</li><li><strong>अभ्यस्यतां (abhyasyatāṃ):</strong> should practice</li><li><strong>सदा (sadā):</strong> always</li></ul>",
+    "english": "A faithful aspirant should continuously reflect intellectually on their identity as Brahman, understanding clearly the scriptural teachings, practicing according to their capacity.",
+    "tamil": "ஊக்கம் உள்ளவர் தனது புத்தியின் செயல்பாடுகளால் ‘நான் பிரஹ்மமே’ என்று சிந்திக்க வேண்டும். அதற்கு அடிப்படையாக, வாக்ய வ்ருத்தியை முழுமையாக பயின்று, அறிந்து பழகிக் கொள்ள வேண்டும்.",
+    "tags": "Faithful contemplation, intellectual reflection, scriptural understanding, continuous practice.",
+    "concordance": "Verses 8, 26, 30 from Upadesa Saram (contemplation on non-dual identity, steadfast practice)."
+},
+{
+    "sanskrit": "(17) तच्चिन्तनं तत्कथनं तदन्योन्यप्रबोधनम्। <br>एतत् एकपरत्वं च ब्रह्माभ्यासं विदुर्बुधाः॥",
+    "transliteration": "taccintanaṃ tatkathanaṃ tadanyonyaprabodhanam,<br>etat ekaparatvaṃ ca brahmābhyāsaṃ vidurbudhāḥ.",
+    "phrase": "<ul><li><strong>तच्चिन्तनं (taccintanaṃ):</strong> contemplating That (Brahman)</li><li><strong>तत्कथनं (tatkathanaṃ):</strong> speaking about That</li><li><strong>तदन्योन्यप्रबोधनम् (tadanyonyaprabodhanam):</strong> mutual enlightening about That</li><li><strong>एतत् (etat):</strong> this</li><li><strong>एकपरत्वं (ekaparatvaṃ):</strong> single-mindedness</li><li><strong>च (ca):</strong> and</li><li><strong>ब्रह्माभ्यासं (brahmābhyāsaṃ):</strong> practice of Brahman</li><li><strong>विदुः (viduḥ):</strong> know</li><li><strong>बुधाः (budhāḥ):</strong> wise people</li></ul>",
+    "english": "The wise regard continuous contemplation on Brahman, speaking about It, mutually enlightening one another about It, and single-minded absorption as the true practice of Brahman.",
+    "tamil": "பிரஹ்மத்தைத் தியானித்தலும், பிரஹ்மத்தைப் பற்றிப் பேசுதலும், ஒருவருக்கொருவர் பிரஹ்மத்தை போதித்தலும், பிரஹ்மத்தில் ஈடுபடுதலுமே பிரஹ்மாப்யாஸம் என்று அறிவாளிகள் சொல்வர்.",
+    "tags": "Contemplation, discourse, mutual instruction, single-minded absorption, Brahman-practice.",
+    "concordance": "Verses 8, 9, 17, 26, 29 from Upadesa Saram (contemplative devotion, discussion and contemplation, supreme goal)."
+},
+{
+    "sanskrit": "(18) देहात्मधीवद् ब्रह्मात्मधीर्दृढैव कृतकृत्यता। <br>यदा तदा यथा तत्र मुक्तोऽसौ नात्र संशयः॥",
+    "transliteration": "dehātmadhīvad brahmātmadhīrdṛḍhaiva kṛtakṛtyatā,<br>yadā tadā yathā tatra mukto'sau nātra saṃśayaḥ.",
+    "phrase": "<ul><li><strong>देहात्मधीवत् (dehātmadhīvat):</strong> like the firm conviction in body as self</li><li><strong>ब्रह्मात्मधीः (brahmātmadhīḥ):</strong> conviction in Brahman as self</li><li><strong>दृढा एव (dṛḍhā eva):</strong> becomes firm indeed</li><li><strong>कृतकृत्यता (kṛtakṛtyatā):</strong> fulfillment, realization</li><li><strong>यदा तदा (yadā tadā):</strong> whenever</li><li><strong>यथा तत्र (yathā tatra):</strong> however, wherever</li><li><strong>मुक्तः (muktaḥ):</strong> liberated</li><li><strong>असौ (asau):</strong> such a person</li><li><strong>न अत्र संशयः (na atra saṃśayaḥ):</strong> no doubt about it</li></ul>",
+    "english": "Just as there is firm conviction in identifying the body as the self, when the conviction of identifying Brahman as self becomes equally firm, complete fulfillment is attained. Such a person is undoubtedly liberated whenever and wherever they may be.",
+    "tamil": "தேகத்தை ஆத்மாவாக அறியும் உறுதிபோல் பிரஹ்மத்தை ஆத்மாவாக அறியும் உறுதியும் வந்துவிட்டால் போதுமானது. எந்த நேரத்தில் மரித்தாலும், அவர் முன்னமே முக்தி பெற்றவராய் நிச்சயம் கருதலாம்.",
+    "tags": "Firm conviction, Brahman identity, immediate liberation, absolute certainty.",
+    "concordance": "Verses 20, 26, 28, 30 from Upadesa Saram (unwavering conviction, ultimate liberation, non-dual awareness)."
+},
+
+    ];
+
+    let currentIndex = 0;
+
+    function loadShloka(index) {
+        const shloka = shlokas[index];
+        document.getElementById('sanskrit-text').innerHTML = shloka.sanskrit;
+        document.getElementById('transliteration-text').innerHTML = shloka.transliteration;
+        showContent('phrase');
+    }
+
+    function showContent(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.tab[data-content="${tab}"]`).classList.add('active');
+        document.getElementById('content').innerHTML = shlokas[currentIndex][tab];
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => showContent(tab.dataset.content));
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + shlokas.length) % shlokas.length;
+        loadShloka(currentIndex);
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % shlokas.length;
+        loadShloka(currentIndex);
+    });
+
+    loadShloka(currentIndex);
+</script>
+
+</body>
+</html>
